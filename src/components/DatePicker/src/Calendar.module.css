@@ -1,0 +1,151 @@
+.calendar {
+    margin-top: 15px;
+    position: absolute;
+    padding: 10px 10px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: fit-content;
+    width: 300px;
+    height: fit-content;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    transition: width 0.2s ease-in-out;
+}
+
+.calendarNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header {
+    text-transform: lowercase;
+    text-align: center;
+    padding: 8px 8px;
+    font-size: 14px;
+}
+
+.NavSelector {
+    display: flex;
+    width: 100px;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 8px;
+
+
+}
+
+.navButton {
+    background: transparent;
+    border: none;
+    cursor: default;
+    opacity: 0.5;
+    transition: opacity 0.2s ease-in-out;
+    text-transform: lowercase;
+    font-size: 18px;
+    color: black;
+    padding: 0;
+}
+
+.chevronButton {
+    background: transparent;
+    border: none;
+    opacity: 0.2;
+    transition: opacity 0.2s ease-in-out;
+    padding: 0;
+}
+
+.chevronButton:hover {
+    opacity: .8;
+}
+
+.chevronContainer {
+    display: flex;
+    gap: 10px;
+}
+
+.daysContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day,
+.grayedDay {
+    cursor: default;
+    text-align: center;
+    padding: 8px 4px;
+    transition: all 0.3s ease;
+}
+
+.day:hover,
+.month:hover,
+.year:hover {
+    background-color: #f0f0f0;
+}
+
+.active {
+    background-color: #f0f0f0;
+}
+
+.navButton:hover {
+    opacity: 1;
+}
+
+.grayedDay {
+    color: #0000003b;
+}
+
+.month,
+.year {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    cursor: default;
+}
+
+.month {
+    text-transform: lowercase;
+    height: 50px;
+}
+
+.year {
+    font-size: 16px;
+    height: 40px;
+}
+
+.monthsContainer,
+.yearsContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+}
+
+@keyframes slide {
+    from {
+        opacity: 0.5;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.monthsContainer,
+.yearsContainer {
+    animation: slide 0.6s forwards;
+}
+
+.today {
+    background-color: #4646467d;
+    color: #ffffff;
+}
+
+@media (max-width: 410px) {
+    .calendar {
+        /* font-size: 22px; */
+        width: 270px;
+    }
+}

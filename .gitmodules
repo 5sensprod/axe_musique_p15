@@ -1,0 +1,3 @@
+[submodule "src/components/DatePicker"]
+	path = src/components/DatePicker
+	url = https://github.com/5sensprod/react-custom-datepicker.git

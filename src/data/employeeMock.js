@@ -1,0 +1,48 @@
+const mockData = [
+  {
+    firstName: 'John',
+    lastName: 'Doe',
+    startDate: '2021-01-01',
+    department: 'IT',
+    dateOfBirth: '1990-06-15',
+    street: '123 Main St',
+    city: 'Anytown',
+    state: 'NY',
+    zipCode: '12345',
+  },
+  {
+    firstName: 'Jane',
+    lastName: 'Smith',
+    startDate: '2020-03-10',
+    department: 'HR',
+    dateOfBirth: '1988-04-22',
+    street: '456 Elm St',
+    city: 'Somewhere',
+    state: 'CA',
+    zipCode: '67890',
+  },
+  {
+    firstName: 'Robert',
+    lastName: 'Brown',
+    startDate: '2019-11-20',
+    department: 'Finance',
+    dateOfBirth: '1975-10-05',
+    street: '789 Maple Dr',
+    city: 'Nowhere',
+    state: 'TX',
+    zipCode: '11223',
+  },
+  {
+    firstName: 'Alice',
+    lastName: 'Johnson',
+    startDate: '2022-02-15',
+    department: 'Sales',
+    dateOfBirth: '1995-12-20',
+    street: '321 Oak Ln',
+    city: 'Everywhere',
+    state: 'FL',
+    zipCode: '44556',
+  },
+]
+
+export default mockData

@@ -1,0 +1,16 @@
+.bgDark {
+    background-color: #12002b;
+}
+
+.main {
+    flex: 1;
+}
+
+.container {
+    color: rgb(187, 187, 187);
+}
+
+.homeLink {
+    font-size: 1.3rem;
+    color: white;
+}

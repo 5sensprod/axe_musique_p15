@@ -1,0 +1,25 @@
+# Ignorer les fichiers de test
+tests/
+test.js
+
+# Ignorer la documentation
+docs/
+
+# Ignorer les fichiers de développement
+*.log
+yarn.lock
+
+# Ignorer les fichiers de configuration
+.babelrc
+rollup.config.js
+.npmignore
+
+# Ignorer dist
+dist/
+
+# Ignorer le dossier des dépendances
+node_modules/
+
+# Autres fichiers/dossiers à ignorer
+*.map
+.eslintrc

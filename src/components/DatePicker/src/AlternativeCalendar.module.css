@@ -1,0 +1,231 @@
+/* Default */
+
+.day,
+.grayedDay {
+    cursor: default;
+    text-align: center;
+    padding: 8px 4px;
+    transition: all 0.3s ease;
+}
+
+.day:hover,
+.month:hover,
+.year:hover {
+    background: #EEF0F4;
+    border-radius: 25%;
+    box-shadow: inset 7px 7px 14px #d4d6d9, inset -7px -7px 14px #ffffff;
+}
+
+.active {
+    background-color: #f0f0f0;
+}
+
+.navButton:hover {
+    opacity: 1;
+}
+
+.glassGrayedDay {
+    color: #712020;
+}
+
+
+/* Glass */
+.glass.calendar {
+    margin-top: 15px;
+    position: absolute;
+    padding: 10px 10px;
+    background: rgba(108, 172, 227, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(20, 20, 20, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: fit-content;
+    width: 300px;
+    height: fit-content;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    color: rgba(0, 0, 0, 0.867);
+}
+
+.glass .active {
+    background-color: #761b1b;
+}
+
+.glass .daysContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    box-shadow: none
+}
+
+.neuro .daysContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    box-shadow: none
+}
+
+.glassHeadersContainer {
+    position: relative;
+    display: flex;
+}
+
+.glassHeader {
+    text-transform: lowercase;
+    text-align: center;
+    padding: 8px 8px;
+    font-size: 16px;
+    background: rgba(118, 170, 213, 0.156);
+    box-shadow: 0 4px 16px 0 rgba(20, 20, 20, 0.10);
+    backdrop-filter: blur(8px);
+    color: rgba(9, 9, 9, 0.623);
+    cursor: default;
+    position: relative;
+
+}
+
+/* .glassHeader::after{
+    content: '';
+    position: absolute;
+    height: 80%;
+    width: 80%;
+    background-color: rgba(4, 5, 31, 0.178);
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    border-radius: 15%;
+    box-shadow: inset -5px -5px 9px rgba(255, 255, 255, 0.2), inset 5px 5px 9px rgba(94,104,121,0.3);
+    backdrop-filter: blur(.8px);
+  } */
+
+/* .glassHeader:hover {
+    text-transform: lowercase;
+    text-align: center;
+    padding: 8px 8px;
+    font-size: 14px;
+    background: rgb(7, 37, 62);
+} */
+
+.glass .day {
+    cursor: default;
+    text-align: center;
+    padding: 8px 4px;
+    transition: all 0.3s ease;
+    box-shadow: none;
+    color: #761b1b;
+}
+
+.glass .day:hover,
+.glass .month:hover,
+.glass .year:hover {
+    background-color: #490e0e;
+}
+
+.glass .active {
+    background-color: #f0f0f0;
+    box-shadow: none
+}
+
+.glass .navButton:hover {
+    opacity: 1;
+}
+
+.glassDay {
+    background: rgba(108, 172, 227, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(20, 20, 20, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 5px;
+    color: rgb(66, 68, 82);
+    /* border: 1px solid rgba(255, 255, 255, 0.18); */
+}
+
+.glassDay:hover {
+    background: rgba(243, 254, 255, 0.473);
+}
+
+.glassActive {
+    background: #76aad5;
+    box-shadow: 0 8px 32px 0 rgba(20, 20, 20, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 5px;
+    color: aliceblue;
+}
+
+.glassToday {
+    background: rgba(243, 254, 255, 0.473);
+    box-shadow: 0 8px 32px 0 rgba(20, 20, 20, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 5px;
+}
+
+.glassGrayedDay {
+    background: rgba(243, 254, 255, 0);
+    /* box-shadow: 0 8px 32px 0 rgba(20, 20, 20, 0.25); */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* border-radius: 5px; */
+    color: #0000007e;
+}
+
+.glassGrayedDay::after {
+    content: '';
+    position: absolute;
+    height: 80%;
+    width: 80%;
+    /* background-color: rgba(4, 5, 31, 0.178); */
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    /* border-radius: 15%;
+    box-shadow: inset -5px -5px 9px rgba(255, 255, 255, 0.2), inset 5px 5px 9px rgba(94,104,121,0.3); */
+    /* backdrop-filter: blur(.6px); */
+}
+
+
+
+
+/* Neuro */
+.neuro.calendar {
+    margin-top: 15px;
+    position: absolute;
+    padding: 20px 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    background: #ebecf0;
+    -webkit-box-shadow: 6px 6px 8px #dfe0e4, -6px -6px 8px #f7f8fc;
+    box-shadow: 6px 6px 8px #dfe0e4, -6px -6px 8px #f7f8fc;
+    width: fit-content;
+    width: 300px;
+    height: fit-content;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.neuroDay:hover {
+    border-radius: 100%;
+    background: #ebecf0;
+    -webkit-box-shadow: 6px 6px 8px #dfe0e4, -6px -6px 8px #f7f8fc;
+    box-shadow: 6px 6px 8px #dfe0e4, -6px -6px 8px #f7f8fc;
+}
+
+.neuroActive,
+.neuroToday {
+    border-radius: 100%;
+    background: #ebecf0;
+    -webkit-box-shadow: 6px 6px 8px #dfe0e4, -6px -6px 8px #f7f8fc;
+    box-shadow: 6px 6px 8px #dfe0e4, -6px -6px 8px #f7f8fc;
+}
+
+.neuroToday {
+    border-radius: 100%;
+    color: #ffffff;
+    background: #c6c6c6;
+    -webkit-box-shadow: 6px 6px 8px #dfe0e4, -6px -6px 8px #f7f8fc;
+    box-shadow: 6px 6px 8px #dfe0e4, -6px -6px 8px #f7f8fc;
+}

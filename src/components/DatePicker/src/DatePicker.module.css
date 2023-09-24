@@ -1,0 +1,68 @@
+.container {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* position: relative; */
+}
+
+.containerInput {
+  display: flex;
+  gap: 10px;
+  position: relative;
+}
+
+.inputContainer {
+  display: flex;
+  gap: 5px;
+
+}
+
+.calendarButton {
+  cursor: pointer;
+}
+
+select {
+  background: transparent;
+  border: none;
+}
+
+.calendarButton {
+  background: transparent;
+  border: none;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-in-out;
+  position: absolute;
+  right: -25px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.calendarButton:hover {
+  opacity: .8;
+}
+
+.calendarButton[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.invisibleButton {
+  opacity: 0;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  pointer-events: none;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

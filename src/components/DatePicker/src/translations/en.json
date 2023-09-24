@@ -1,0 +1,38 @@
+{
+  "months": [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  "shortMonths": [
+    "Jan.",
+    "Feb.",
+    "Mar.",
+    "Apr.",
+    "May",
+    "June",
+    "July",
+    "Aug.",
+    "Sept.",
+    "Oct.",
+    "Nov.",
+    "Dec."
+  ],
+  "days": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  "placeholder": "Select a date",
+  "errors": {
+    "invalidDateFormat": "Date format is invalid",
+    "invalidDateRange": "The date should be between {minYear} and {maxYear}.",
+    "invalidDate": "The date is invalid",
+    "unknownError": "An unknown error has occurred"
+  }
+}
