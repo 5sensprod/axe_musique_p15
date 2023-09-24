@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/DatePicker/src/NavSelector.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/DatePicker/src/NavSelector.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import PropTypes from 'prop-types'
+import { HomeIcon } from './Icons'
+import ChevronButtons from './ChevronSelector'
+import styles from './Calendar.module.css'
+import Button from './Button'
+import useKeyboardAccessibility from './hooks/useKeyboardAccessibility'
+import {
+  DAYS,
+  YEARS,
+  switchToMonthView,
+  toggleYearView,
+  resetToCurrentDate,
+} from './utils/viewUtils'
+
+/**
+ * Sélecteur de mois.
+ *
+ * @param {Object} props - Propriétés du composant.
+ * @param {Date} props.currentMonth - Mois actuellement affiché.
+ * @param {Array&lt;string>} props.months - Liste des mois traduits.
+ * @param {string} props.view - Vue actuelle ('days', 'months', 'years').
+ * @param {Function} props.setView - Fonction pour changer la vue.
+ */
+function MonthSelector({ currentMonth, months, view, setView }) {
+  const handleMonthSelect = () => {
+    setView(switchToMonthView(view))
+  }
+
+  const ref = useKeyboardAccessibility(handleMonthSelect)
+
+  if (view === YEARS) return null
+
+  return (
+    &lt;Button
+      ref={ref}
+      onClick={handleMonthSelect}
+      className={styles.navButton}
+      tabIndex={0}
+    >
+      {months[currentMonth.getMonth()]}
+    &lt;/Button>
+  )
+}
+
+MonthSelector.propTypes = {
+  currentMonth: PropTypes.instanceOf(Date).isRequired,
+  months: PropTypes.arrayOf(PropTypes.string).isRequired,
+  view: PropTypes.string.isRequired,
+  setView: PropTypes.func.isRequired,
+}
+
+/**
+ * Sélecteur d'année.
+ *
+ * @param {Object} props - Propriétés du composant.
+ * @param {Date} props.currentMonth - Mois actuellement affiché.
+ * @param {string} props.view - Vue actuelle ('days', 'months', 'years').
+ * @param {Function} props.setView - Fonction pour changer la vue.
+ * @param {Array&lt;number>} props.yearsBlock - Bloc d'années actuel.
+ */
+function YearSelector({ currentMonth, view, setView, yearsBlock }) {
+  const handleYearSelect = () => {
+    setView(toggleYearView(view))
+  }
+
+  const ref = useKeyboardAccessibility(handleYearSelect)
+
+  return (
+    &lt;Button
+      ref={ref}
+      onClick={handleYearSelect}
+      className={styles.navButton}
+      tabIndex={0}
+    >
+      {view === YEARS
+        ? `${yearsBlock[0]}-${yearsBlock[yearsBlock.length - 1]}`
+        : currentMonth.getFullYear()}
+    &lt;/Button>
+  )
+}
+
+YearSelector.propTypes = {
+  currentMonth: PropTypes.instanceOf(Date).isRequired,
+  view: PropTypes.string.isRequired,
+  setView: PropTypes.func.isRequired,
+  yearsBlock: PropTypes.arrayOf(PropTypes.number).isRequired,
+}
+
+/**
+ * Bouton pour revenir à la date actuelle.
+ *
+ * @param {Object} props - Propriétés du composant.
+ * @param {Function} props.setViewedDate - Fonction pour mettre à jour la date affichée.
+ * @param {Function} props.setView - Fonction pour changer la vue.
+ * @param {Function} props.setCurrentDate - Fonction pour mettre à jour la date actuelle.
+ */
+function HomeButton({ setViewedDate, setView, setCurrentDate }) {
+  const handleHomeClick = () => {
+    const dateToday = resetToCurrentDate()
+    setViewedDate(dateToday)
+    setCurrentDate(dateToday)
+    setView(DAYS)
+  }
+
+  const ref = useKeyboardAccessibility(handleHomeClick)
+
+  return (
+    &lt;Button
+      ref={ref}
+      onClick={handleHomeClick}
+      icon={HomeIcon}
+      className={styles.navButton}
+      tabIndex={0}
+    />
+  )
+}
+
+HomeButton.propTypes = {
+  setViewedDate: PropTypes.func.isRequired,
+  setView: PropTypes.func.isRequired,
+  setCurrentDate: PropTypes.func.isRequired,
+}
+
+function NavSelector(props) {
+  return (
+    &lt;>
+      &lt;div className={styles.NavSelector}>
+        &lt;MonthSelector {...props} />
+        &lt;YearSelector {...props} />
+      &lt;/div>
+      &lt;div className={styles.homeSelector}>
+        &lt;HomeButton {...props} />
+      &lt;/div>
+      &lt;ChevronButtons {...props} />
+    &lt;/>
+  )
+}
+
+export default NavSelector
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AddEmployee">AddEmployee</a></li><li><a href="global.html#AddressFields">AddressFields</a></li><li><a href="global.html#AppRouter">AppRouter</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#CONFIG_VALIDATION_RULES">CONFIG_VALIDATION_RULES</a></li><li><a href="global.html#Calendar">Calendar</a></li><li><a href="global.html#CalendarButton">CalendarButton</a></li><li><a href="global.html#CalendarIcon">CalendarIcon</a></li><li><a href="global.html#ChevronButton">ChevronButton</a></li><li><a href="global.html#ChevronButtons">ChevronButtons</a></li><li><a href="global.html#ChevronIcon">ChevronIcon</a></li><li><a href="global.html#DAYS">DAYS</a></li><li><a href="global.html#DEFAULT_CONFIG">DEFAULT_CONFIG</a></li><li><a href="global.html#DateGrid">DateGrid</a></li><li><a href="global.html#DateInputField">DateInputField</a></li><li><a href="global.html#DatePicker">DatePicker</a></li><li><a href="global.html#DaysView">DaysView</a></li><li><a href="global.html#EmployeeForm">EmployeeForm</a></li><li><a href="global.html#EmployeeTable">EmployeeTable</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#FORWARD">FORWARD</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#HomeButton">HomeButton</a></li><li><a href="global.html#HomeIcon">HomeIcon</a></li><li><a href="global.html#InputField">InputField</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#Logo">Logo</a></li><li><a href="global.html#MaskedInput">MaskedInput</a></li><li><a href="global.html#MonthSelector">MonthSelector</a></li><li><a href="global.html#MonthsView">MonthsView</a></li><li><a href="global.html#Navigation">Navigation</a></li><li><a href="global.html#NotFound">NotFound</a></li><li><a href="global.html#YearSelector">YearSelector</a></li><li><a href="global.html#YearsView">YearsView</a></li><li><a href="global.html#abbreviateMonth">abbreviateMonth</a></li><li><a href="global.html#adjustStartOfWeek">adjustStartOfWeek</a></li><li><a href="global.html#applyYearConfig">applyYearConfig</a></li><li><a href="global.html#calculateNewDate">calculateNewDate</a></li><li><a href="global.html#chooseDate">chooseDate</a></li><li><a href="global.html#convertFormattedStringToDate">convertFormattedStringToDate</a></li><li><a href="global.html#createEscapeHandler">createEscapeHandler</a></li><li><a href="global.html#employeeSlice">employeeSlice</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatDatePickerDate">formatDatePickerDate</a></li><li><a href="global.html#formatDateWithSlashes">formatDateWithSlashes</a></li><li><a href="global.html#formatToMask">formatToMask</a></li><li><a href="global.html#generateDays">generateDays</a></li><li><a href="global.html#generateTotalSlots">generateTotalSlots</a></li><li><a href="global.html#getDaysInMonth">getDaysInMonth</a></li><li><a href="global.html#getTranslations">getTranslations</a></li><li><a href="global.html#goToNextMonth">goToNextMonth</a></li><li><a href="global.html#handleDateSelect">handleDateSelect</a></li><li><a href="global.html#handleEmptyInput">handleEmptyInput</a></li><li><a href="global.html#handleIncompleteInput">handleIncompleteInput</a></li><li><a href="global.html#handleInvalidDate">handleInvalidDate</a></li><li><a href="global.html#handleNavigationKeys">handleNavigationKeys</a></li><li><a href="global.html#handlePropsAndConfig">handlePropsAndConfig</a></li><li><a href="global.html#handleTabKey">handleTabKey</a></li><li><a href="global.html#handleValidDate">handleValidDate</a></li><li><a href="global.html#initialEmployees">initialEmployees</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#isLeapYear">isLeapYear</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#preloadedState">preloadedState</a></li><li><a href="global.html#processYearConfig">processYearConfig</a></li><li><a href="global.html#reorderDays">reorderDays</a></li><li><a href="global.html#resetToCurrentDate">resetToCurrentDate</a></li><li><a href="global.html#savedEmployees">savedEmployees</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#switchToMonthView">switchToMonthView</a></li><li><a href="global.html#toggleCalendarVisibility">toggleCalendarVisibility</a></li><li><a href="global.html#toggleYearView">toggleYearView</a></li><li><a href="global.html#updateInput">updateInput</a></li><li><a href="global.html#updateMonth">updateMonth</a></li><li><a href="global.html#useCalendarLogic">useCalendarLogic</a></li><li><a href="global.html#useDatePickerState">useDatePickerState</a></li><li><a href="global.html#useDateValidation">useDateValidation</a></li><li><a href="global.html#useDesignStyles">useDesignStyles</a></li><li><a href="global.html#useEscapeKey">useEscapeKey</a></li><li><a href="global.html#useFormData">useFormData</a></li><li><a href="global.html#useFormErrors">useFormErrors</a></li><li><a href="global.html#useKeyboardAccessibility">useKeyboardAccessibility</a></li><li><a href="global.html#useOutsideInteractions">useOutsideInteractions</a></li><li><a href="global.html#useYearLogic">useYearLogic</a></li><li><a href="global.html#validateDateFormat">validateDateFormat</a></li><li><a href="global.html#validateEmployeeForm">validateEmployeeForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Sep 24 2023 22:48:26 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

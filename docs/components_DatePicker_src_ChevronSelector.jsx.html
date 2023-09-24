@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/DatePicker/src/ChevronSelector.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/DatePicker/src/ChevronSelector.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from 'react'
+import styles from './Calendar.module.css'
+import { ChevronIcon } from './Icons'
+import Button from './Button'
+import { calculateNewDate } from './utils/dateNavigations'
+import useKeyboardAccessibility from './hooks/useKeyboardAccessibility'
+
+/**
+ * Composant ChevronButton pour afficher un bouton avec une icône de chevron.
+ *
+ * @component
+ * @param {string} direction - Direction du chevron ("up" ou "down").
+ * @param {function} onClick - Fonction appelée lors du clic sur le bouton.
+ * @param {boolean} useIcons - Détermine si l'icône doit être utilisée ou non.
+ * @param {string} label - Texte alternatif à afficher si useIcons est false.
+ * @returns {React.Element} - Renvoie le composant ChevronButton.
+ */
+const ChevronButton = React.forwardRef(
+  ({ direction, onClick, useIcons, label, ...props }, ref) => (
+    &lt;Button
+      ref={ref}
+      onClick={onClick}
+      onMouseDown={(e) => e.preventDefault()}
+      className={styles.chevronButton}
+      icon={() => useIcons &amp;&amp; &lt;ChevronIcon direction={direction} />}
+      {...props}
+    >
+      {!useIcons &amp;&amp; label}
+    &lt;/Button>
+  ),
+)
+
+/**
+ * Composant ChevronButtons pour afficher les boutons de navigation (précédent/suivant).
+ *
+ * @component
+ * @param {function} setViewedDate - Fonction pour définir la date actuellement affichée.
+ * @param {boolean} useIcons - Détermine si les icônes doivent être utilisées pour les boutons.
+ * @param {string} view - Vue actuelle ("days", "months" ou "years").
+ * @param {function} setYearsBlock - Fonction pour définir le bloc d'années.
+ * @param {Array&lt;number>} yearsBlock - Bloc d'années actuel.
+ * @param {function} setAnimationKey - Fonction pour définir la clé d'animation.
+ * @param {number} minYear - Année minimum.
+ * @param {number} maxYear - Année maximum.
+ * @param {number} yearBlockSize - Taille du bloc d'années.
+ * @returns {React.Element} - Renvoie le composant ChevronButtons.
+ */
+function ChevronButtons({
+  setViewedDate,
+  useIcons,
+  view,
+  setYearsBlock,
+  yearsBlock,
+  setAnimationKey,
+  minYear,
+  maxYear,
+  yearBlockSize,
+}) {
+  const handleDateChange = (direction) => {
+    setViewedDate((prev) => {
+      const { newDate, newYearBlock } = calculateNewDate(
+        view,
+        direction,
+        yearsBlock,
+        prev,
+        minYear,
+        maxYear,
+        yearBlockSize,
+      )
+      if (newYearBlock) {
+        setYearsBlock(newYearBlock)
+      }
+
+      if (newDate) {
+        setAnimationKey((prevKey) => prevKey + 1)
+        return newDate
+      }
+      setYearsBlock(newYearBlock)
+      setAnimationKey((prevKey) => prevKey + 1)
+      return newDate
+    })
+  }
+
+  const prevButtonRef = useKeyboardAccessibility((direction) => {
+    handleDateChange(direction === 'down' ? 'prev' : 'next')
+  })
+
+  const nextButtonRef = useKeyboardAccessibility((direction) => {
+    handleDateChange(direction === 'down' ? 'prev' : 'next')
+  })
+
+  return (
+    &lt;div className={styles.chevronContainer}>
+      &lt;ChevronButton
+        direction="down"
+        onClick={() => handleDateChange('prev')}
+        useIcons={useIcons}
+        label="Previous"
+        ref={prevButtonRef}
+        tabIndex={0}
+      />
+      &lt;ChevronButton
+        direction="up"
+        onClick={() => handleDateChange('next')}
+        useIcons={useIcons}
+        label="Next"
+        ref={nextButtonRef}
+        tabIndex={0}
+      />
+    &lt;/div>
+  )
+}
+
+export default ChevronButtons
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AddEmployee">AddEmployee</a></li><li><a href="global.html#AddressFields">AddressFields</a></li><li><a href="global.html#AppRouter">AppRouter</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#CONFIG_VALIDATION_RULES">CONFIG_VALIDATION_RULES</a></li><li><a href="global.html#Calendar">Calendar</a></li><li><a href="global.html#CalendarButton">CalendarButton</a></li><li><a href="global.html#CalendarIcon">CalendarIcon</a></li><li><a href="global.html#ChevronButton">ChevronButton</a></li><li><a href="global.html#ChevronButtons">ChevronButtons</a></li><li><a href="global.html#ChevronIcon">ChevronIcon</a></li><li><a href="global.html#DAYS">DAYS</a></li><li><a href="global.html#DEFAULT_CONFIG">DEFAULT_CONFIG</a></li><li><a href="global.html#DateGrid">DateGrid</a></li><li><a href="global.html#DateInputField">DateInputField</a></li><li><a href="global.html#DatePicker">DatePicker</a></li><li><a href="global.html#DaysView">DaysView</a></li><li><a href="global.html#EmployeeForm">EmployeeForm</a></li><li><a href="global.html#EmployeeTable">EmployeeTable</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#FORWARD">FORWARD</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#HomeButton">HomeButton</a></li><li><a href="global.html#HomeIcon">HomeIcon</a></li><li><a href="global.html#InputField">InputField</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#Logo">Logo</a></li><li><a href="global.html#MaskedInput">MaskedInput</a></li><li><a href="global.html#MonthSelector">MonthSelector</a></li><li><a href="global.html#MonthsView">MonthsView</a></li><li><a href="global.html#Navigation">Navigation</a></li><li><a href="global.html#NotFound">NotFound</a></li><li><a href="global.html#YearSelector">YearSelector</a></li><li><a href="global.html#YearsView">YearsView</a></li><li><a href="global.html#abbreviateMonth">abbreviateMonth</a></li><li><a href="global.html#adjustStartOfWeek">adjustStartOfWeek</a></li><li><a href="global.html#applyYearConfig">applyYearConfig</a></li><li><a href="global.html#calculateNewDate">calculateNewDate</a></li><li><a href="global.html#chooseDate">chooseDate</a></li><li><a href="global.html#convertFormattedStringToDate">convertFormattedStringToDate</a></li><li><a href="global.html#createEscapeHandler">createEscapeHandler</a></li><li><a href="global.html#employeeSlice">employeeSlice</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatDatePickerDate">formatDatePickerDate</a></li><li><a href="global.html#formatDateWithSlashes">formatDateWithSlashes</a></li><li><a href="global.html#formatToMask">formatToMask</a></li><li><a href="global.html#generateDays">generateDays</a></li><li><a href="global.html#generateTotalSlots">generateTotalSlots</a></li><li><a href="global.html#getDaysInMonth">getDaysInMonth</a></li><li><a href="global.html#getTranslations">getTranslations</a></li><li><a href="global.html#goToNextMonth">goToNextMonth</a></li><li><a href="global.html#handleDateSelect">handleDateSelect</a></li><li><a href="global.html#handleEmptyInput">handleEmptyInput</a></li><li><a href="global.html#handleIncompleteInput">handleIncompleteInput</a></li><li><a href="global.html#handleInvalidDate">handleInvalidDate</a></li><li><a href="global.html#handleNavigationKeys">handleNavigationKeys</a></li><li><a href="global.html#handlePropsAndConfig">handlePropsAndConfig</a></li><li><a href="global.html#handleTabKey">handleTabKey</a></li><li><a href="global.html#handleValidDate">handleValidDate</a></li><li><a href="global.html#initialEmployees">initialEmployees</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#isLeapYear">isLeapYear</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#preloadedState">preloadedState</a></li><li><a href="global.html#processYearConfig">processYearConfig</a></li><li><a href="global.html#reorderDays">reorderDays</a></li><li><a href="global.html#resetToCurrentDate">resetToCurrentDate</a></li><li><a href="global.html#savedEmployees">savedEmployees</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#switchToMonthView">switchToMonthView</a></li><li><a href="global.html#toggleCalendarVisibility">toggleCalendarVisibility</a></li><li><a href="global.html#toggleYearView">toggleYearView</a></li><li><a href="global.html#updateInput">updateInput</a></li><li><a href="global.html#updateMonth">updateMonth</a></li><li><a href="global.html#useCalendarLogic">useCalendarLogic</a></li><li><a href="global.html#useDatePickerState">useDatePickerState</a></li><li><a href="global.html#useDateValidation">useDateValidation</a></li><li><a href="global.html#useDesignStyles">useDesignStyles</a></li><li><a href="global.html#useEscapeKey">useEscapeKey</a></li><li><a href="global.html#useFormData">useFormData</a></li><li><a href="global.html#useFormErrors">useFormErrors</a></li><li><a href="global.html#useKeyboardAccessibility">useKeyboardAccessibility</a></li><li><a href="global.html#useOutsideInteractions">useOutsideInteractions</a></li><li><a href="global.html#useYearLogic">useYearLogic</a></li><li><a href="global.html#validateDateFormat">validateDateFormat</a></li><li><a href="global.html#validateEmployeeForm">validateEmployeeForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Sep 24 2023 22:48:26 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

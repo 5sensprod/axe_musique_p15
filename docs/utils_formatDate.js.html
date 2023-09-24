@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: utils/formatDate.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: utils/formatDate.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Formate une date selon le format spécifié.
+ *
+ * @function
+ * @param {Date} date - La date à formater.
+ * @param {string} [format='YYYY-MM-DD'] - Le format de date souhaité. Par défaut, il est 'YYYY-MM-DD'.
+ * @returns {string|null} La date formatée ou null si l'argument "date" n'est pas une instance de Date.
+ * @example
+ * formatDate(new Date(2023, 5, 1), 'DD-MM-YYYY') // "01-06-2023"
+ */
+export const formatDate = (date, format = 'YYYY-MM-DD') => {
+  if (!(date instanceof Date)) return null
+
+  switch (format) {
+    case 'YYYY-MM-DD':
+      return date.toISOString().split('T')[0]
+    case 'DD-MM-YYYY':
+      return `${String(date.getDate()).padStart(2, '0')}-${String(
+        date.getMonth() + 1,
+      ).padStart(2, '0')}-${date.getFullYear()}`
+    // Ajoutez d'autres formats au besoin
+    default:
+      return date.toISOString().split('T')[0]
+  }
+}
+
+/**
+ * Formate une date (sous forme de chaîne) avec des slashes comme séparateurs.
+ *
+ * @function
+ * @param {string} dateString - La date sous forme de chaîne à formater.
+ * @returns {string} La date formatée avec des slashes.
+ * @example
+ * formatDateWithSlashes('2023-06-01') // "2023/06/01"
+ */
+export const formatDateWithSlashes = (dateString) => {
+  const date = new Date(dateString)
+  return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(
+    2,
+    '0',
+  )}/${String(date.getDate()).padStart(2, '0')}`
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AddEmployee">AddEmployee</a></li><li><a href="global.html#AddressFields">AddressFields</a></li><li><a href="global.html#AppRouter">AppRouter</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#CONFIG_VALIDATION_RULES">CONFIG_VALIDATION_RULES</a></li><li><a href="global.html#Calendar">Calendar</a></li><li><a href="global.html#CalendarButton">CalendarButton</a></li><li><a href="global.html#CalendarIcon">CalendarIcon</a></li><li><a href="global.html#ChevronButton">ChevronButton</a></li><li><a href="global.html#ChevronButtons">ChevronButtons</a></li><li><a href="global.html#ChevronIcon">ChevronIcon</a></li><li><a href="global.html#DAYS">DAYS</a></li><li><a href="global.html#DEFAULT_CONFIG">DEFAULT_CONFIG</a></li><li><a href="global.html#DateGrid">DateGrid</a></li><li><a href="global.html#DateInputField">DateInputField</a></li><li><a href="global.html#DatePicker">DatePicker</a></li><li><a href="global.html#DaysView">DaysView</a></li><li><a href="global.html#EmployeeForm">EmployeeForm</a></li><li><a href="global.html#EmployeeTable">EmployeeTable</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#FORWARD">FORWARD</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#HomeButton">HomeButton</a></li><li><a href="global.html#HomeIcon">HomeIcon</a></li><li><a href="global.html#InputField">InputField</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#Logo">Logo</a></li><li><a href="global.html#MaskedInput">MaskedInput</a></li><li><a href="global.html#MonthSelector">MonthSelector</a></li><li><a href="global.html#MonthsView">MonthsView</a></li><li><a href="global.html#Navigation">Navigation</a></li><li><a href="global.html#NotFound">NotFound</a></li><li><a href="global.html#YearSelector">YearSelector</a></li><li><a href="global.html#YearsView">YearsView</a></li><li><a href="global.html#abbreviateMonth">abbreviateMonth</a></li><li><a href="global.html#adjustStartOfWeek">adjustStartOfWeek</a></li><li><a href="global.html#applyYearConfig">applyYearConfig</a></li><li><a href="global.html#calculateNewDate">calculateNewDate</a></li><li><a href="global.html#chooseDate">chooseDate</a></li><li><a href="global.html#convertFormattedStringToDate">convertFormattedStringToDate</a></li><li><a href="global.html#createEscapeHandler">createEscapeHandler</a></li><li><a href="global.html#employeeSlice">employeeSlice</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatDatePickerDate">formatDatePickerDate</a></li><li><a href="global.html#formatDateWithSlashes">formatDateWithSlashes</a></li><li><a href="global.html#formatToMask">formatToMask</a></li><li><a href="global.html#generateDays">generateDays</a></li><li><a href="global.html#generateTotalSlots">generateTotalSlots</a></li><li><a href="global.html#getDaysInMonth">getDaysInMonth</a></li><li><a href="global.html#getTranslations">getTranslations</a></li><li><a href="global.html#goToNextMonth">goToNextMonth</a></li><li><a href="global.html#handleDateSelect">handleDateSelect</a></li><li><a href="global.html#handleEmptyInput">handleEmptyInput</a></li><li><a href="global.html#handleIncompleteInput">handleIncompleteInput</a></li><li><a href="global.html#handleInvalidDate">handleInvalidDate</a></li><li><a href="global.html#handleNavigationKeys">handleNavigationKeys</a></li><li><a href="global.html#handlePropsAndConfig">handlePropsAndConfig</a></li><li><a href="global.html#handleTabKey">handleTabKey</a></li><li><a href="global.html#handleValidDate">handleValidDate</a></li><li><a href="global.html#initialEmployees">initialEmployees</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#isLeapYear">isLeapYear</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#preloadedState">preloadedState</a></li><li><a href="global.html#processYearConfig">processYearConfig</a></li><li><a href="global.html#reorderDays">reorderDays</a></li><li><a href="global.html#resetToCurrentDate">resetToCurrentDate</a></li><li><a href="global.html#savedEmployees">savedEmployees</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#switchToMonthView">switchToMonthView</a></li><li><a href="global.html#toggleCalendarVisibility">toggleCalendarVisibility</a></li><li><a href="global.html#toggleYearView">toggleYearView</a></li><li><a href="global.html#updateInput">updateInput</a></li><li><a href="global.html#updateMonth">updateMonth</a></li><li><a href="global.html#useCalendarLogic">useCalendarLogic</a></li><li><a href="global.html#useDatePickerState">useDatePickerState</a></li><li><a href="global.html#useDateValidation">useDateValidation</a></li><li><a href="global.html#useDesignStyles">useDesignStyles</a></li><li><a href="global.html#useEscapeKey">useEscapeKey</a></li><li><a href="global.html#useFormData">useFormData</a></li><li><a href="global.html#useFormErrors">useFormErrors</a></li><li><a href="global.html#useKeyboardAccessibility">useKeyboardAccessibility</a></li><li><a href="global.html#useOutsideInteractions">useOutsideInteractions</a></li><li><a href="global.html#useYearLogic">useYearLogic</a></li><li><a href="global.html#validateDateFormat">validateDateFormat</a></li><li><a href="global.html#validateEmployeeForm">validateEmployeeForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Sep 24 2023 22:48:26 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

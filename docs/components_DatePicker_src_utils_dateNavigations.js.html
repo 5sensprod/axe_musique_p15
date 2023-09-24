@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/DatePicker/src/utils/dateNavigations.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/DatePicker/src/utils/dateNavigations.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { DEFAULT_CONFIG } from '../config/defaultConfig'
+
+/**
+ * Traite la configuration de l'année. Si elle est définie comme une chaîne, elle essaie de la résoudre en une valeur numérique.
+ *
+ * @function
+ * @param {(string|number)} yearConfig - La configuration de l'année, qui peut être une chaîne ou un nombre.
+ * @param {number} currentYear - L'année actuelle.
+ * @returns {(number|null)} - L'année traitée ou `null` si la configuration est invalide.
+ */
+const processYearConfig = (yearConfig, currentYear) => {
+  if (typeof yearConfig === 'number') return yearConfig
+
+  if (typeof yearConfig === 'string') {
+    const match = yearConfig.match(/(auto|actual)([+-]\d+)?/)
+    if (match) {
+      const base = currentYear
+      const offset = parseInt(match[2], 10) || 0
+      return base + offset
+    }
+  }
+
+  // retourner null si la configuration de l'année n'est pas valide
+  return null
+}
+
+const adjustDate = (currentDate, yearAdjustment, monthAdjustment) => {
+  const year = currentDate.getFullYear() + yearAdjustment
+  const month = (currentDate.getMonth() + monthAdjustment + 12) % 12
+  return new Date(year, month)
+}
+
+/**
+ * Applique la configuration de l'année et la traite.
+ *
+ * @function
+ * @param {(string|number)} yearConfig - La configuration de l'année.
+ * @param {number} currentYear - L'année actuelle.
+ * @returns {(number|null)} - L'année traitée ou `null`.
+ */
+export const applyYearConfig = (yearConfig, currentYear) => {
+  return processYearConfig(yearConfig, currentYear)
+}
+
+/**
+ * Navigue vers le mois suivant.
+ *
+ * @function
+ * @param {Date} currentDate - La date actuelle.
+ * @param {number} minYear - L'année minimale autorisée.
+ * @param {number} maxYear - L'année maximale autorisée.
+ * @returns {Date} - La date du mois suivant.
+ */
+const goToNextMonth = (currentDate, minYear, maxYear) => {
+  const nextDate = adjustDate(
+    currentDate,
+    currentDate.getMonth() === 11 ? 1 : 0,
+    1,
+  )
+  if (nextDate.getFullYear() > applyYearConfig(maxYear)) {
+    return new Date(applyYearConfig(maxYear), 11)
+  }
+  return nextDate
+}
+
+const goToPreviousMonth = (currentDate, minYear, maxYear) => {
+  const prevDate = adjustDate(
+    currentDate,
+    currentDate.getMonth() === 0 ? -1 : 0,
+    -1,
+  )
+  if (prevDate.getFullYear() &lt; applyYearConfig(minYear)) {
+    return new Date(applyYearConfig(minYear), 0)
+  }
+  return prevDate
+}
+
+const goToNextYear = (currentDate, minYear, maxYear) => {
+  const nextDate = adjustDate(currentDate, 1, 0)
+  if (nextDate.getFullYear() > applyYearConfig(maxYear)) {
+    return new Date(applyYearConfig(maxYear), currentDate.getMonth())
+  }
+  return nextDate
+}
+
+const goToPreviousYear = (currentDate, minYear, maxYear) => {
+  const prevDate = adjustDate(currentDate, -1, 0)
+  if (prevDate.getFullYear() &lt; applyYearConfig(minYear)) {
+    return new Date(applyYearConfig(minYear), currentDate.getMonth())
+  }
+  return prevDate
+}
+
+const goToPreviousYearBlock = (yearsBlock, minYear, maxYear, yearBlockSize) => {
+  const blockSize = yearBlockSize || DEFAULT_CONFIG.YEAR_BLOCK_SIZE
+  const minProcessedYear = applyYearConfig(minYear, new Date().getFullYear())
+  const maxProcessedYear = applyYearConfig(maxYear, new Date().getFullYear())
+
+  let newStartYear = yearsBlock[0] - blockSize
+
+  // Si nous sommes en dessous de minYear
+  if (newStartYear &lt; minProcessedYear) {
+    // Si le premier élément du bloc actuel est déjà minYear, affichez les deux dernières années avant maxYear
+    if (yearsBlock[0] === minProcessedYear) {
+      newStartYear = maxProcessedYear - 1 // Affichez les 2 dernières années avant maxYear
+    } else {
+      newStartYear = maxProcessedYear - blockSize + 1 // Commencez par maxYear - blockSize + 1
+    }
+  }
+
+  return Array.from({ length: blockSize }, (_, i) => newStartYear + i).filter(
+    (year) => year >= minProcessedYear &amp;&amp; year &lt;= maxProcessedYear,
+  )
+}
+
+const goToNextYearBlock = (yearsBlock, minYear, maxYear, yearBlockSize) => {
+  const blockSize = yearBlockSize || DEFAULT_CONFIG.YEAR_BLOCK_SIZE
+  const minProcessedYear = applyYearConfig(minYear, new Date().getFullYear())
+  const maxProcessedYear = applyYearConfig(maxYear, new Date().getFullYear())
+
+  let newStartYear = yearsBlock[0] + blockSize
+
+  if (newStartYear > maxProcessedYear) {
+    newStartYear = minProcessedYear
+  }
+
+  return Array.from({ length: blockSize }, (_, i) => newStartYear + i).filter(
+    (year) => year >= minProcessedYear &amp;&amp; year &lt;= maxProcessedYear,
+  )
+}
+
+/**
+ * Calcule la nouvelle date basée sur la vue et la direction actuelles.
+ *
+ * @function
+ * @param {string} view - La vue actuelle (jours, mois ou années).
+ * @param {string} direction - La direction de navigation (précédente ou suivante).
+ * @param {Array&lt;number>} yearsBlock - Le bloc d'années actuel.
+ * @param {Date} prev - La date précédente.
+ * @param {number} minYear - L'année minimale autorisée.
+ * @param {number} maxYear - L'année maximale autorisée.
+ * @param {number} yearBlockSize - La taille du bloc d'années.
+ * @returns {object} - Un objet contenant la nouvelle date et le nouveau bloc d'années.
+ */
+export const calculateNewDate = (
+  view,
+  direction,
+  yearsBlock,
+  prev,
+  minYear,
+  maxYear,
+  yearBlockSize,
+) => {
+  const currentYear = new Date().getFullYear()
+  const minProcessedYear = applyYearConfig(minYear, currentYear)
+  const maxProcessedYear = applyYearConfig(maxYear, currentYear)
+
+  let newDate = prev
+  let newYearBlock = yearsBlock
+
+  switch (view) {
+    case 'months':
+      newDate =
+        direction === 'prev'
+          ? goToPreviousYear(prev, minProcessedYear, maxProcessedYear)
+          : goToNextYear(prev, minProcessedYear, maxProcessedYear)
+      break
+    case 'days':
+      newDate =
+        direction === 'prev'
+          ? goToPreviousMonth(prev, minProcessedYear, maxProcessedYear)
+          : goToNextMonth(prev, minProcessedYear, maxProcessedYear)
+      break
+    case 'years':
+      newYearBlock =
+        direction === 'prev'
+          ? goToPreviousYearBlock(
+              yearsBlock,
+              minProcessedYear,
+              maxProcessedYear,
+              yearBlockSize,
+            )
+          : goToNextYearBlock(
+              yearsBlock,
+              minProcessedYear,
+              maxProcessedYear,
+              yearBlockSize,
+            )
+      break
+    default:
+      break
+  }
+
+  return { newDate, newYearBlock }
+}
+
+/**
+ * Gère les touches de navigation pour faciliter la navigation dans le calendrier.
+ *
+ * @function
+ * @param {Event} e - L'événement clavier.
+ * @param {number} index - L'index actuel.
+ * @param {number} maxIndex - L'index maximum.
+ * @param {function} action - L'action à exécuter lors de la sélection d'un élément.
+ * @param {Array&lt;HTMLElement>} refsArray - Le tableau de références des éléments interactifs.
+ * @param {function} getItem - Une fonction pour obtenir un élément basé sur un index.
+ * @param {function} closeCalendar - Une fonction pour fermer le calendrier.
+ */
+export function handleNavigationKeys(
+  e,
+  index,
+  maxIndex,
+  action,
+  refsArray,
+  getItem,
+  closeCalendar,
+) {
+  switch (e.key) {
+    case 'ArrowRight':
+      if (index &lt; maxIndex) {
+        refsArray[index + 1].focus()
+      }
+      break
+    case 'ArrowLeft':
+      if (index > 0) {
+        refsArray[index - 1].focus()
+      }
+      break
+    case 'Escape':
+      if (typeof closeCalendar === 'function') {
+        closeCalendar()
+      }
+      break
+    case 'Enter':
+    case 'Space':
+      const item = getItem ? getItem(index) : index
+      action(item)
+      e.preventDefault()
+      break
+
+    case 'Tab':
+      if (index &lt; maxIndex) {
+        refsArray[index + 1].focus()
+      }
+      break
+    default:
+      break
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html"></a></li><li><a href="global.html#AddEmployee">AddEmployee</a></li><li><a href="global.html#AddressFields">AddressFields</a></li><li><a href="global.html#AppRouter">AppRouter</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#CONFIG_VALIDATION_RULES">CONFIG_VALIDATION_RULES</a></li><li><a href="global.html#Calendar">Calendar</a></li><li><a href="global.html#CalendarButton">CalendarButton</a></li><li><a href="global.html#CalendarIcon">CalendarIcon</a></li><li><a href="global.html#ChevronButton">ChevronButton</a></li><li><a href="global.html#ChevronButtons">ChevronButtons</a></li><li><a href="global.html#ChevronIcon">ChevronIcon</a></li><li><a href="global.html#DAYS">DAYS</a></li><li><a href="global.html#DEFAULT_CONFIG">DEFAULT_CONFIG</a></li><li><a href="global.html#DateGrid">DateGrid</a></li><li><a href="global.html#DateInputField">DateInputField</a></li><li><a href="global.html#DatePicker">DatePicker</a></li><li><a href="global.html#DaysView">DaysView</a></li><li><a href="global.html#EmployeeForm">EmployeeForm</a></li><li><a href="global.html#EmployeeTable">EmployeeTable</a></li><li><a href="global.html#Employees">Employees</a></li><li><a href="global.html#FORWARD">FORWARD</a></li><li><a href="global.html#Footer">Footer</a></li><li><a href="global.html#Header">Header</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#HomeButton">HomeButton</a></li><li><a href="global.html#HomeIcon">HomeIcon</a></li><li><a href="global.html#InputField">InputField</a></li><li><a href="global.html#Layout">Layout</a></li><li><a href="global.html#Logo">Logo</a></li><li><a href="global.html#MaskedInput">MaskedInput</a></li><li><a href="global.html#MonthSelector">MonthSelector</a></li><li><a href="global.html#MonthsView">MonthsView</a></li><li><a href="global.html#Navigation">Navigation</a></li><li><a href="global.html#NotFound">NotFound</a></li><li><a href="global.html#YearSelector">YearSelector</a></li><li><a href="global.html#YearsView">YearsView</a></li><li><a href="global.html#abbreviateMonth">abbreviateMonth</a></li><li><a href="global.html#adjustStartOfWeek">adjustStartOfWeek</a></li><li><a href="global.html#applyYearConfig">applyYearConfig</a></li><li><a href="global.html#calculateNewDate">calculateNewDate</a></li><li><a href="global.html#chooseDate">chooseDate</a></li><li><a href="global.html#convertFormattedStringToDate">convertFormattedStringToDate</a></li><li><a href="global.html#createEscapeHandler">createEscapeHandler</a></li><li><a href="global.html#employeeSlice">employeeSlice</a></li><li><a href="global.html#formatDate">formatDate</a></li><li><a href="global.html#formatDatePickerDate">formatDatePickerDate</a></li><li><a href="global.html#formatDateWithSlashes">formatDateWithSlashes</a></li><li><a href="global.html#formatToMask">formatToMask</a></li><li><a href="global.html#generateDays">generateDays</a></li><li><a href="global.html#generateTotalSlots">generateTotalSlots</a></li><li><a href="global.html#getDaysInMonth">getDaysInMonth</a></li><li><a href="global.html#getTranslations">getTranslations</a></li><li><a href="global.html#goToNextMonth">goToNextMonth</a></li><li><a href="global.html#handleDateSelect">handleDateSelect</a></li><li><a href="global.html#handleEmptyInput">handleEmptyInput</a></li><li><a href="global.html#handleIncompleteInput">handleIncompleteInput</a></li><li><a href="global.html#handleInvalidDate">handleInvalidDate</a></li><li><a href="global.html#handleNavigationKeys">handleNavigationKeys</a></li><li><a href="global.html#handlePropsAndConfig">handlePropsAndConfig</a></li><li><a href="global.html#handleTabKey">handleTabKey</a></li><li><a href="global.html#handleValidDate">handleValidDate</a></li><li><a href="global.html#initialEmployees">initialEmployees</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#isLeapYear">isLeapYear</a></li><li><a href="global.html#isValidDate">isValidDate</a></li><li><a href="global.html#preloadedState">preloadedState</a></li><li><a href="global.html#processYearConfig">processYearConfig</a></li><li><a href="global.html#reorderDays">reorderDays</a></li><li><a href="global.html#resetToCurrentDate">resetToCurrentDate</a></li><li><a href="global.html#savedEmployees">savedEmployees</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#switchToMonthView">switchToMonthView</a></li><li><a href="global.html#toggleCalendarVisibility">toggleCalendarVisibility</a></li><li><a href="global.html#toggleYearView">toggleYearView</a></li><li><a href="global.html#updateInput">updateInput</a></li><li><a href="global.html#updateMonth">updateMonth</a></li><li><a href="global.html#useCalendarLogic">useCalendarLogic</a></li><li><a href="global.html#useDatePickerState">useDatePickerState</a></li><li><a href="global.html#useDateValidation">useDateValidation</a></li><li><a href="global.html#useDesignStyles">useDesignStyles</a></li><li><a href="global.html#useEscapeKey">useEscapeKey</a></li><li><a href="global.html#useFormData">useFormData</a></li><li><a href="global.html#useFormErrors">useFormErrors</a></li><li><a href="global.html#useKeyboardAccessibility">useKeyboardAccessibility</a></li><li><a href="global.html#useOutsideInteractions">useOutsideInteractions</a></li><li><a href="global.html#useYearLogic">useYearLogic</a></li><li><a href="global.html#validateDateFormat">validateDateFormat</a></li><li><a href="global.html#validateEmployeeForm">validateEmployeeForm</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Sep 24 2023 22:48:26 GMT+0200 (heure d’été d’Europe centrale)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
