@@ -2,7 +2,7 @@
   "name": "p_14_rhnet",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://5sensprod.github.io/p14_WealthHealth",
+  "homepage": "https://5sensprod.github.io/axe_musique_p15",
   "dependencies": {
     "@5sensprod/react-custom-datepicker": "^1.1.0",
     "@reduxjs/toolkit": "^1.9.5",
