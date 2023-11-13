@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/axe_musique_p15/static/css/main.d40ac0ad.css",
-    "main.js": "/axe_musique_p15/static/js/main.37b0ce20.js",
+    "main.js": "/axe_musique_p15/static/js/main.6414b7a1.js",
     "static/js/787.ccc3fe55.chunk.js": "/axe_musique_p15/static/js/787.ccc3fe55.chunk.js",
     "static/media/calendar-alt.svg": "/axe_musique_p15/static/media/calendar-alt.e6b20e3712e4ce75e67afd151dd47f35.svg",
     "index.html": "/axe_musique_p15/index.html",
     "static/media/home-house.svg": "/axe_musique_p15/static/media/home-house.505585aeacc19068f3cc2e4fe259aaa1.svg",
     "static/media/chevron-down.svg": "/axe_musique_p15/static/media/chevron-down.2ea3b87ef429e0abe4a7af6d24fc76a1.svg",
     "main.d40ac0ad.css.map": "/axe_musique_p15/static/css/main.d40ac0ad.css.map",
-    "main.37b0ce20.js.map": "/axe_musique_p15/static/js/main.37b0ce20.js.map",
+    "main.6414b7a1.js.map": "/axe_musique_p15/static/js/main.6414b7a1.js.map",
     "787.ccc3fe55.chunk.js.map": "/axe_musique_p15/static/js/787.ccc3fe55.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d40ac0ad.css",
-    "static/js/main.37b0ce20.js"
+    "static/js/main.6414b7a1.js"
   ]
 }
